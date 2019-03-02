@@ -14,22 +14,9 @@ class PrometheusP6Factory: P6Factory {
     }
 
     override fun getJdbcEventListener(): JdbcEventListener {
-        return PrometheusJdbcEventListener(options.getPrefix())
+        return PrometheusJdbcEventListener()
     }
 
 }
 
-class PrometheusP6SpyOptions(private val optionsRepository: P6OptionsRepository) : P6SpyOptions(optionsRepository) {
-    override fun load(options: Map<String, String>) {
-        super.load(options)
-        optionsRepository.set(String::class.java, PREFIX, options[PREFIX])
-    }
-
-    fun getPrefix(): String {
-        return optionsRepository.get(String::class.java, PREFIX)
-    }
-
-    companion object {
-        const val PREFIX = "prefix"
-    }
-}
+class PrometheusP6SpyOptions(optionsRepository: P6OptionsRepository) : P6SpyOptions(optionsRepository)

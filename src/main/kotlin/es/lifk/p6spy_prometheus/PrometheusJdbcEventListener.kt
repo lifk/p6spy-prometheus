@@ -8,10 +8,10 @@ import io.prometheus.client.Gauge
 import io.prometheus.client.Histogram
 import java.util.concurrent.TimeUnit
 
-class PrometheusJdbcEventListener(prefix: String): SimpleJdbcEventListener() {
-    private val queries = Counter.build().name("${prefix}queries_total").help("Total queries.").register()
-    private val inProgressQueries = Gauge.build().name("${prefix}in_progress_queries").help("In progress queries.").register()
-    private val queryLatency = Histogram.build().name("${prefix}query_latency_milis").help("query latency in milis").register()
+class PrometheusJdbcEventListener: SimpleJdbcEventListener() {
+    private val queries = Counter.build().name("queries_total").labelNames("status").help("Total queries.").register()
+    private val inProgressQueries = Gauge.build().name("in_progress_queries").help("In progress queries.").register()
+    private val queryLatency = Histogram.build().name("query_latency_milis").help("query latency in milis").register()
 
     override fun onBeforeAnyExecute(statementInformation: StatementInformation) {
         inProgressQueries.inc()
