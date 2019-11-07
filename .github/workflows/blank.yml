@@ -4,13 +4,14 @@ on: [push]
 
 jobs:
   test:
-
     runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v1
-    - name: test
-      run: ./gradlew test
+    - name: Gradle Command
+      uses: eskatos/gradle-command-action@v1
+      with:
+        argument: build
   build:
     runs-on: [self-hosted]
     steps:
